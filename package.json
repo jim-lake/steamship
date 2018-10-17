@@ -1,0 +1,33 @@
+{
+  "name": "streamship",
+  "version": "0.0.1",
+  "description": "Streamship Server",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jim-lake/steamship.git"
+  },
+  "author": {
+    "name": "Jim Lake"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "async": "2.6.x",
+    "aws-sdk": "2.280.x",
+    "body-parser": "^1.18.3",
+    "connect-multiparty": "^2.1.1",
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.4",
+    "lodash": "4.x",
+    "method-override": "^3.0.0",
+    "moment-timezone": "^0.5.21",
+    "morgan": "^1.9.0",
+    "mysql": "^2.16.0"
+  }
+}
