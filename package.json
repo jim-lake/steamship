@@ -1,7 +1,7 @@
 {
-  "name": "streamship",
+  "name": "steamship",
   "version": "0.0.1",
-  "description": "Streamship Server",
+  "description": "Steamship Server",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint .",
