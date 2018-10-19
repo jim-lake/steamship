@@ -1,7 +1,7 @@
 {
   "name": "steamship",
-  "version": "0.0.1",
-  "description": "Steamship Server",
+  "version": "0.1.1",
+  "description": "A CMS server for webapps",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",
