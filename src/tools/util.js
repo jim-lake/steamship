@@ -1,9 +1,10 @@
 'use strict';
 
 const _ = require('lodash');
-const util = require('util');
 const async = require('async');
 const crypto = require('crypto');
+const fs = require('fs');
+const util = require('util');
 
 exports.requiredProp = requiredProp;
 exports.optionalProp = optionalProp;
@@ -18,6 +19,8 @@ exports.isBetween = isBetween;
 exports.retryWrapper = retryWrapper;
 exports.getTime = getTime;
 exports.filterInPlace = filterInPlace;
+exports.unlinkFiles = unlinkFiles;
+exports.noop = noop;
 
 function requiredProp(req,prop,is_sensitive) {
   if (is_sensitive && prop in req.query) {
@@ -153,3 +156,12 @@ function filterInPlace(array,callback) {
     }
   }
 }
+
+function unlinkFiles(files) {
+  for (let key in files) {
+    const file = files[key];
+    fs.unlink(file.path,noop);
+  }
+}
+
+function noop() {}

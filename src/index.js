@@ -6,10 +6,13 @@ const method_override = require('method-override');
 const body_parser = require('body-parser');
 const cookie_parser = require('cookie-parser');
 const errorhandler = require('errorhandler');
-
-const routes = require('./routes');
-const util = require('./tools/util.js');
 const db = require('./tools/db.js');
+const util = require('./tools/util.js');
+
+const app_renderer = require('./app_renderer');
+const app_server = require('./app_server');
+const routes = require('./routes');
+const site_manager = require('./site_manager');
 
 //====== express =====
 
@@ -17,12 +20,13 @@ exports.init = init;
 
 let g_isDev = false;
 
-function init(params) {
+function init(config,done) {
   const {
     is_development,
     app,
     db_config,
-  } = params;
+    app_config,
+  } = config;
   g_isDev = is_development;
 
   db.init(db_config);
@@ -47,14 +51,11 @@ function init(params) {
   app.use(method_override());
 
   app.use(routes.router);
-
-  if (g_isDev) {
-    app.all('/quit',() => {
-      process.exit(0);
-    });
-  }
-
+  app.use(app_server.router);
   app.use(throw_error_handler);
+
+  app_renderer.init(app_config);
+  site_manager.init(done || util.noop);
 }
 
 function allow_text_content_type(req,res,next) {
@@ -88,6 +89,8 @@ function allow_cross_domain(req,res,next) {
 }
 
 function throw_error_handler(err,req,res,next) {
+  util.unlinkFiles(req.files);
+
   if (err && err.code && err.body && typeof err.code === 'number') {
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Content-Type","text/plain");

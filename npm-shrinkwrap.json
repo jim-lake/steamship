@@ -27,9 +27,9 @@
       }
     },
     "aws-sdk": {
-      "version": "2.280.1",
-      "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.280.1.tgz",
-      "integrity": "sha512-NdATmKYTWKvRsUo7F0hhMbSVbk4kHdQb8aWSJpXRccXsOTviNSxTIOvaube8RXT7nCz+S5CckJ/fPTUTVv/vQw==",
+      "version": "2.337.0",
+      "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.337.0.tgz",
+      "integrity": "sha512-Oqi7OQOxweQXNnbK6m3ealq/pjXPWgFI9adJ2Gls2343RtqUTHAr776dULHjFe5IrLdHjm2avlL7FgDuNVD3FQ==",
       "requires": {
         "buffer": "4.9.1",
         "events": "1.1.1",
@@ -553,10 +553,23 @@
         "util-deprecate": "1.0.2"
       }
     },
+    "ret": {
+      "version": "0.1.15",
+      "resolved": "https://registry.npmjs.org/ret/-/ret-0.1.15.tgz",
+      "integrity": "sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg=="
+    },
     "safe-buffer": {
       "version": "5.1.2",
       "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
       "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
+    },
+    "safe-regex": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/safe-regex/-/safe-regex-1.1.0.tgz",
+      "integrity": "sha1-QKNmnzsHfR6UPURinhV91IAjvy4=",
+      "requires": {
+        "ret": "0.1.15"
+      }
     },
     "safer-buffer": {
       "version": "2.1.2",

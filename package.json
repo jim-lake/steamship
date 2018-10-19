@@ -4,7 +4,7 @@
   "description": "Steamship Server",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,17 +17,18 @@
   "license": "MIT",
   "dependencies": {
     "async": "2.6.x",
-    "aws-sdk": "2.280.x",
+    "aws-sdk": "^2.337.0",
     "body-parser": "^1.18.3",
     "connect-multiparty": "^2.1.1",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "errorhandler": "^1.5.0",
     "express": "^4.16.4",
-    "lodash": "4.x",
+    "lodash": "^4.17.11",
     "method-override": "^3.0.0",
     "moment-timezone": "^0.5.21",
     "morgan": "^1.9.0",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "safe-regex": "^1.1.0"
   }
 }
