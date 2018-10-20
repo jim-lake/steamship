@@ -135,7 +135,7 @@ SELECT site_host.*
 FROM site_host
 JOIN site USING (site_id)
 WHERE site.is_disabled = 0
-ORDER BY site_host.priority ASC, site_host_id ASC
+ORDER BY site_host.priority DESC, site_host_id ASC
 `;
   db.queryFromPool(sql,(err,results) => {
     const new_map = {};
@@ -165,7 +165,7 @@ SELECT *
 FROM site_path
 JOIN site USING (site_id)
 WHERE site_path.is_disabled = 0 AND site.is_disabled = 0
-ORDER BY site_path.priority ASC, site_path_id ASC
+ORDER BY site_path.priority DESC, site_path_id ASC
 `;
   db.queryFromPool(sql,(err,results) => {
     const new_map = {};
