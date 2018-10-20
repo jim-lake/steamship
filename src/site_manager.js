@@ -21,7 +21,9 @@ let g_appVerMap = {};
 let g_appMap = {};
 
 function init(done) {
+  console.log("site_manager.init: START");
   load(err => {
+    console.log("site_manager.init: DONE:",err);
     if (!err) {
       _reload();
     }
@@ -90,7 +92,6 @@ function _getSitePath(site,path) {
 }
 
 function load(done) {
-  console.log("site_manager.load START");
   let hostname_map;
   let hostname_regex_list;
   let site_map;
@@ -115,7 +116,6 @@ function load(done) {
       done(err);
     }),
   ],(err) => {
-    console.log("site_manager.load DONE:",err);
     if (!err) {
       g_hostnameMap = hostname_map;
       g_hostnameRegexList = hostname_regex_list;
