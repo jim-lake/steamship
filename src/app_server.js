@@ -17,11 +17,11 @@ function _serverMiddleware(req,res) {
 
   if (!site_data) {
     res.header('Cache-Control',"public, max-age=60");
-    res.status(404).send({ hostname, path });
+    res.sendStatus(404);
   } else {
     const { content_type, body, } = app_renderer.render(site_data);
 
-    res.header('Cache-Control',"public, max-age=2");
+    res.header('Cache-Control',"public, max-age=60");
     res.header('Content-Type',content_type);
     res.send(body);
   }

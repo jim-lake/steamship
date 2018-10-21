@@ -31,11 +31,6 @@ function init(config,done) {
 
   db.init(db_config);
 
-  app.all('/status_check',function(req,res) {
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.sendStatus(200);
-  });
-
   if (g_isDev) {
     app.use(morgan('[:date] :method :url :status :res[content-length] - :response-time ms'));
   } else {
