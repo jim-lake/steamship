@@ -8,6 +8,7 @@ const util = require('./tools/util.js');
 exports.init = init;
 exports.load = load;
 exports.get = get;
+exports.getAllSitePaths = getAllSitePaths;
 
 const RELOAD_MS = 15*1000;
 
@@ -65,6 +66,42 @@ function get(hostname,path) {
     };
   }
   return ret;
+}
+
+function getAllSitePaths(site_id,done) {
+  load(err => {
+    let site_data;
+    if (!err) {
+      const site = g_siteMap[site_id];
+      if (!site) {
+        err = 'site_not_found';
+      } else {
+        const path_list = [];
+
+        const path_key_list = Object.keys(site.path_map);
+        path_key_list.forEach(path => {
+          const site_path = site.path_map[path];
+          const app_resource = g_appResourceMap[site_path.app_resource_id];
+          const app_ver = g_appVerMap[app_resource.app_ver_id];
+          const app = g_appMap[app_ver.app_id];
+          path_list.push({
+            path,
+            site_path,
+            app_resource,
+            app_ver,
+            app,
+          });
+        });
+
+        site_data = util.deepClone({
+          site,
+          path_list,
+        });
+      }
+    }
+
+    done(err,site_data);
+  });
 }
 
 function _getSiteByHostname(hostname) {
@@ -176,6 +213,7 @@ ORDER BY site_path.priority DESC, site_path_id ASC
         const {
           site_id,
           site_config_json,
+          s3_publish_url,
           site_path_id,
           path_regex,
           app_resource_id,
@@ -185,6 +223,7 @@ ORDER BY site_path.priority DESC, site_path_id ASC
           new_map[site_id] = {
             site_id,
             site_config: _getJson(site_config_json),
+            s3_publish_url,
             path_map: {},
             path_regex_list: [],
           };

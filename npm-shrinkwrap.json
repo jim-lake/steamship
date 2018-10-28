@@ -13,6 +13,11 @@
         "negotiator": "0.6.1"
       }
     },
+    "amazon-s3-uri": {
+      "version": "0.0.3",
+      "resolved": "https://registry.npmjs.org/amazon-s3-uri/-/amazon-s3-uri-0.0.3.tgz",
+      "integrity": "sha1-3BiYANJfKQ6xNCqFdBudLJF1csE="
+    },
     "array-flatten": {
       "version": "1.1.1",
       "resolved": "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz",

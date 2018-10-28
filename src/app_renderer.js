@@ -15,7 +15,7 @@ function render(site_data) {
   const {
     site,
     site_path,
-    app,
+    //app,
     app_ver,
     app_resource,
   } = site_data;

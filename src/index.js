@@ -14,13 +14,17 @@ const app_server = require('./app_server');
 const routes = require('./routes');
 const site_manager = require('./site_manager');
 
+exports.init = init;
+exports.getConfig = getConfig;
+
 //====== express =====
 
-exports.init = init;
-
 let g_isDev = false;
+let g_config;
 
 function init(config,done) {
+  g_config = config;
+
   const {
     is_development,
     app,
@@ -36,8 +40,7 @@ function init(config,done) {
   } else {
     app.use(morgan(':remote-addr - - [:date] ":method :url HTTP/:http-version" :status :response-time(ms) ":referrer" ":user-agent"'));
   }
-  app.use(allow_text_content_type);
-  app.use(allow_cross_domain);
+  app.use(_allowCrossDomain);
 
   app.use(body_parser.json({ limit: '50mb' }));
   app.use(body_parser.urlencoded({ extended: false, limit: '50mb' }));
@@ -47,20 +50,17 @@ function init(config,done) {
 
   app.use(routes.router);
   app.use(app_server.router);
-  app.use(throw_error_handler);
+  app.use(_throwErrorHandler);
 
   app_renderer.init(app_config);
   site_manager.init(done || util.noop);
 }
 
-function allow_text_content_type(req,res,next) {
-  if (req.is('text/plain')) {
-    req.headers['content-type'] = 'application/json';
-  }
-  next();
+function getConfig(key) {
+  return g_config[key];
 }
 
-function allow_cross_domain(req,res,next) {
+function _allowCrossDomain(req,res,next) {
   const origin = req.get('Origin');
 
   if (origin || req.method === 'OPTIONS') {
@@ -83,7 +83,7 @@ function allow_cross_domain(req,res,next) {
   }
 }
 
-function throw_error_handler(err,req,res,next) {
+function _throwErrorHandler(err,req,res,next) {
   util.unlinkFiles(req.files);
 
   if (err && err.code && err.body && typeof err.code === 'number') {
