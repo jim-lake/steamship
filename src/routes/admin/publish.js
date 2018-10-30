@@ -99,7 +99,6 @@ function _publishSitePath(params,done) {
       CacheControl: "public, max-age=60",
       Key: key,
     };
-    console.log(key);
     s3.putObject(opts,err => {
       if (err) {
         util.errorLog("publish._publishSitePath: putObject err:",err);
@@ -107,7 +106,6 @@ function _publishSitePath(params,done) {
       done(err);
     });
   } else {
-    console.log("skip path:",path);
     done();
   }
 }
