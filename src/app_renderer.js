@@ -49,6 +49,9 @@ function render(site_data) {
 
     body = _appendAfterTag(body,'body',script_text);
   }
+  if (config.text_replacements) {
+    body = _applyAll(body,config.text_replacements,_replaceText);
+  }
 
   return {
     content_type,
@@ -99,4 +102,21 @@ function _replaceTagContent(body,tag_name,text) {
   const replace_text = `<${tag_name}>${text}</${tag_name}>`;
 
   return body.replace(regex,replace_text);
+}
+
+function _replaceText(body,item) {
+  const { search, replace } = item;
+
+  return body.replace(search,replace);
+}
+
+function _applyAll(body,arg,action) {
+  if (Array.isArray(arg)) {
+    arg.forEach(item => {
+      body = action(body,item);
+    });
+  } else {
+    body = action(body,arg);
+  }
+  return body;
 }
