@@ -23,6 +23,7 @@ function _publishSite(req,res) {
   if (!mainModule.getConfig('allow_publish')) {
     res.status(403).send("Publish not allowed by config");
   } else {
+    let published_paths = [];
     let site_data;
     async.series([
       done => {
@@ -50,14 +51,19 @@ function _publishSite(req,res) {
             path_data,
             key_prefix: key || "",
           };
-          _publishSitePath(opts,done);
+          _publishSitePath(opts,(err,s3_key) => {
+            if (!err && s3_key) {
+              published_paths.push({ path: path_data.path, s3_key });
+            }
+            done(err);
+          });
         },done);
       }],
       err => {
         if (err) {
           res.status(500).send({ err });
         } else {
-          res.send("Published");
+          res.send(published_paths);
         }
       }
     );
@@ -90,7 +96,8 @@ function _publishSitePath(params,done) {
   if (path[0] === '/') {
     const { content_type, body, } = app_renderer.render(site_data);
 
-    const key = path_join(key_prefix,path.slice(1));
+    const rest = path === '/' ? "index.html" : path.slice(1);
+    const key = path_join(key_prefix,rest);
     const opts = {
       ACL: 'public-read',
       Bucket: bucket,
@@ -103,7 +110,7 @@ function _publishSitePath(params,done) {
       if (err) {
         util.errorLog("publish._publishSitePath: putObject err:",err);
       }
-      done(err);
+      done(err,key);
     });
   } else {
     done();
