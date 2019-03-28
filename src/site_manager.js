@@ -215,6 +215,7 @@ ORDER BY site_path.priority DESC, site_path_id ASC
           site_config_json,
           s3_publish_url,
           site_path_id,
+          path,
           path_regex,
           app_resource_id,
           site_path_config_json,
@@ -235,9 +236,10 @@ ORDER BY site_path.priority DESC, site_path_id ASC
           app_resource_id,
         };
 
-        if (_isSimpleMatch(path_regex)) {
-          site.path_map[path_regex] = site_path;
-        } else {
+        if (path) {
+          site.path_map[path] = site_path;
+        }
+        if (path_regex) {
           const regex = _getRegex(path_regex);
           if (regex) {
             site.path_regex_list.push({ regex, site_path });
@@ -281,10 +283,6 @@ JOIN app USING (app_id)
     }
     done(err,app_map,app_ver_map,app_resource_map);
   });
-}
-
-function _isSimpleMatch(string) {
-  return /^[^.*+[\]\\]*$/.test(string);
 }
 
 function _getRegex(string) {
