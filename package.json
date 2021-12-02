@@ -1,6 +1,6 @@
 {
   "name": "steamship",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A CMS server for webapps",
   "main": "src/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "async": "2.6.x",
     "aws-sdk": "^2.337.0",
     "body-parser": "^1.18.3",
-    "connect-multiparty": "https://github.com/jim-lake/connect-multiparty.git#c7f6baece25ac7f542f7ed4309266c8834b121e6",
+    "connect-multiparty": "github:jim-lake/connect-multiparty#c7f6baece25ac7f542f7ed4309266c8834b121e6",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "errorhandler": "^1.5.0",
