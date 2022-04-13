@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "amazon-s3-uri": "0.0.3",
-    "async": "2.6.x",
+    "async": "3.2.x",
     "aws-sdk": "^2.337.0",
     "body-parser": "^1.18.3",
     "connect-multiparty": "github:jim-lake/connect-multiparty#c7f6baece25ac7f542f7ed4309266c8834b121e6",
