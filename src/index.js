@@ -22,23 +22,26 @@ exports.getConfig = getConfig;
 let g_isDev = false;
 let g_config;
 
-function init(config,done) {
+function init(config, done) {
   g_config = config;
 
-  const {
-    is_development,
-    app,
-    db_config,
-    app_config,
-  } = config;
+  const { is_development, app, db_config, app_config } = config;
   g_isDev = is_development;
 
   db.init(db_config);
 
   if (g_isDev) {
-    app.use(morgan('[:date] :method :url :status :res[content-length] - :response-time ms'));
+    app.use(
+      morgan(
+        '[:date] :method :url :status :res[content-length] - :response-time ms'
+      )
+    );
   } else {
-    app.use(morgan(':remote-addr - - [:date] ":method :url HTTP/:http-version" :status :response-time(ms) ":referrer" ":user-agent"'));
+    app.use(
+      morgan(
+        ':remote-addr - - [:date] ":method :url HTTP/:http-version" :status :response-time(ms) ":referrer" ":user-agent"'
+      )
+    );
   }
   app.use(_allowCrossDomain);
 
@@ -60,41 +63,41 @@ function getConfig(key) {
   return g_config[key];
 }
 
-function _allowCrossDomain(req,res,next) {
+function _allowCrossDomain(req, res, next) {
   const origin = req.get('Origin');
 
   if (origin || req.method === 'OPTIONS') {
     if (origin) {
-      res.header("Access-Control-Allow-Origin",origin);
+      res.header('Access-Control-Allow-Origin', origin);
     } else {
-      res.header("Access-Control-Allow-Origin","*");
+      res.header('Access-Control-Allow-Origin', '*');
     }
-    res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Headers","content-type,accept");
-    res.header("Access-Control-Max-Age","5");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'content-type,accept');
+    res.header('Access-Control-Max-Age', '5');
   }
 
   if (req.method === 'OPTIONS') {
-    res.header("Cache-Control","public, max-age=3600");
-    res.header("Vary","Origin");
+    res.header('Cache-Control', 'public, max-age=3600');
+    res.header('Vary', 'Origin');
     res.sendStatus(204);
   } else {
     next();
   }
 }
 
-function _throwErrorHandler(err,req,res,next) {
+function _throwErrorHandler(err, req, res, next) {
   util.unlinkFiles(req.files);
 
   if (err && err.code && err.body && typeof err.code === 'number') {
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.header("Content-Type","text/plain");
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.header('Content-Type', 'text/plain');
     res.status(err.code).send(err.body.toString());
   } else if (g_isDev) {
-    errorhandler()(err,req,res,next);
+    errorhandler()(err, req, res, next);
   } else {
-    util.errorLog("Middleware err:",err);
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+    util.errorLog('Middleware err:', err);
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.sendStatus(500);
   }
 }
