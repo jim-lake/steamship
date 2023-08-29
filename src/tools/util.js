@@ -21,6 +21,7 @@ exports.getTime = getTime;
 exports.filterInPlace = filterInPlace;
 exports.unlinkFiles = unlinkFiles;
 exports.noop = noop;
+exports.jsonParse = jsonParse;
 
 function requiredProp(req, prop, is_sensitive) {
   if (is_sensitive && prop in req.query) {
@@ -166,12 +167,19 @@ function filterInPlace(array, callback) {
     }
   }
 }
-
 function unlinkFiles(files) {
   for (let key in files) {
     const file = files[key];
     fs.unlink(file.path, noop);
   }
 }
-
+function jsonParse(input) {
+  let ret;
+  try {
+    ret = JSON.parse(input);
+  } catch (e) {
+    // ignore
+  }
+  return ret;
+}
 function noop() {}

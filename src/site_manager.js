@@ -220,6 +220,7 @@ ORDER BY site_path.priority DESC, site_path_id ASC
           site_id,
           site_config_json,
           s3_publish_url,
+          s3_put_json,
           site_path_id,
           path,
           path_regex,
@@ -231,6 +232,7 @@ ORDER BY site_path.priority DESC, site_path_id ASC
             site_id,
             site_config: _getJson(site_config_json),
             s3_publish_url,
+            s3_put_json,
             path_map: {},
             path_regex_list: [],
           };

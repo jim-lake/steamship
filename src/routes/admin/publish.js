@@ -79,6 +79,7 @@ function _publishSite(req, res) {
 function _publishSitePath(params, done) {
   const { s3, bucket, site, path_data, key_prefix } = params;
   const { path, site_path, app_resource, app, app_ver } = path_data;
+  const s3_put_json = site.s3_put_json ? util.jsonParse(site.s3_put_json) : {};
   const site_data = {
     site,
     site_path,
@@ -93,13 +94,15 @@ function _publishSitePath(params, done) {
     const rest = path === '/' ? 'index.html' : path.slice(1);
     const key = path_join(key_prefix, rest);
     const opts = {
-      ACL: 'public-read',
+      ...s3_put_json,
       Bucket: bucket,
       Body: body,
       ContentType: content_type,
       CacheControl: 'public, max-age=60',
       Key: key,
     };
+    console.log('site:', site);
+    console.log('opts:', opts);
     s3.putObject(opts, (err) => {
       if (err) {
         util.errorLog('publish._publishSitePath: putObject err:', err);
